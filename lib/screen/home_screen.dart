@@ -20,10 +20,56 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderEmpty() {
-    return Container();
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _Logo(),
+          SizedBox(height: 30.0),
+          _AppName(),
+        ],
+      ),
+    );
   }
 
   Widget renderVideo() {
     return Container();
+  }
+}
+
+class _Logo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'asset/img/logo.png',
+    );
+  }
+}
+
+class _AppName extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final textStyle = TextStyle(
+      color: Colors.white,
+      fontSize: 30.0,
+      fontWeight: FontWeight.w300,
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'VIDEO',
+          style: textStyle,
+        ),
+        Text(
+          'PLAYER',
+          style: textStyle.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        )
+      ],
+    );
   }
 }
