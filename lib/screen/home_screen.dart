@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_video_player/component/custom_video_player.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -62,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderVideo() {
-    return Container();
+    return Center(
+      child: CustomVideoPlayer(video: video!,),
+    );
   }
 }
 
