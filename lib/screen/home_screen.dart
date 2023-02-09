@@ -26,12 +26,26 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _Logo(),
+          _Logo(
+            onTap: onNewVideoPressed,
+          ),
           SizedBox(height: 30.0),
           _AppName(),
         ],
       ),
     );
+  }
+
+  void onNewVideoPressed() async {
+    final video = await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+    );
+
+    if (video != null) {
+      setState(() {
+        this.video = video;
+      });
+    }
   }
 
   BoxDecoration getBoxDecoration() {
@@ -53,10 +67,17 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _Logo extends StatelessWidget {
+  final GestureTapCallback onTap;
+
+  const _Logo({required this.onTap});
+
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'asset/img/logo.png',
+    return GestureDetector(
+      onTap: onTap,
+      child: Image.asset(
+        'asset/img/logo.png',
+      ),
     );
   }
 }
