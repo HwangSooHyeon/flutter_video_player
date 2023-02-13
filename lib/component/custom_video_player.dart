@@ -5,6 +5,8 @@ import 'package:flutter_video_player/component/custom_icon_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
+final _speed = [1, 1.5, 2];
+
 class CustomVideoPlayer extends StatefulWidget {
   final XFile video;
   final GestureTapCallback onNewVideoPressed;
@@ -19,6 +21,7 @@ class CustomVideoPlayer extends StatefulWidget {
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   VideoPlayerController? videoController;
   bool showControls = false;
+  num dropDownValue = _speed.first;
 
   @override
   void initState() {
@@ -119,6 +122,32 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             ),
             if (showControls)
               Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: DropdownButton(
+                    value: dropDownValue,
+                    style: TextStyle(color: Colors.white),
+                    dropdownColor: Colors.black.withOpacity(0.5),
+                    alignment: Alignment.center,
+                    autofocus: true,
+                    items: _speed.map(
+                      (speed) {
+                        return DropdownMenuItem(
+                          child: Text('${speed}배속'),
+                          value: speed,
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (speed) {
+                      dropDownValue = speed!;
+                      onChangeSpeed(speed.toDouble());
+                    },
+                  ),
+                ),
+              ),
+            if (showControls)
+              Align(
                 alignment: Alignment.topRight,
                 child: CustomIconButton(
                     onPressed: widget.onNewVideoPressed,
@@ -190,5 +219,9 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     videoController!.value.isPlaying
         ? videoController!.pause()
         : videoController!.play();
+  }
+
+  void onChangeSpeed(double? speed) {
+    videoController!.setPlaybackSpeed(speed!);
   }
 }
