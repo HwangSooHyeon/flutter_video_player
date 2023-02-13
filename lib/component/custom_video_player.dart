@@ -7,8 +7,10 @@ import 'package:video_player/video_player.dart';
 
 class CustomVideoPlayer extends StatefulWidget {
   final XFile video;
+  final GestureTapCallback onNewVideoPressed;
 
-  const CustomVideoPlayer({super.key, required this.video});
+  const CustomVideoPlayer(
+      {super.key, required this.video, required this.onNewVideoPressed});
 
   @override
   State<StatefulWidget> createState() => _CustomVideoPlayerState();
@@ -81,7 +83,8 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
           Align(
             alignment: Alignment.topRight,
             child: CustomIconButton(
-                onPressed: () {}, iconData: Icons.photo_camera_back),
+                onPressed: widget.onNewVideoPressed,
+                iconData: Icons.photo_camera_back),
           ),
           Align(
             alignment: Alignment.center,
