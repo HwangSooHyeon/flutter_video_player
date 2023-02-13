@@ -132,6 +132,8 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
         currentPosition.inSeconds) {
       position = currentPosition + Duration(seconds: 3);
     }
+
+    videoController!.seekTo(position);
   }
 
   void onPlayPressed() {
