@@ -155,7 +155,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 
   Widget renderTimeTextFromDuration(Duration duration) {
     return Text(
-      '${duration.inMinutes.toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
+      '${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 3600).toString().padLeft(2, '0')}',
       style: TextStyle(color: Colors.white),
     );
   }
