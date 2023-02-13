@@ -31,9 +31,21 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 
     await videoController.initialize();
 
+    videoController.addListener(videoControllerListener);
+
     setState(() {
       this.videoController = videoController;
     });
+  }
+
+  void videoControllerListener() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    videoController?.removeListener(videoControllerListener);
+    super.dispose();
   }
 
   @override
@@ -77,17 +89,17 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CustomIconButton(
-                  onPressed: () {},
+                  onPressed: onReversePressed,
                   iconData: Icons.rotate_left,
                 ),
                 CustomIconButton(
-                  onPressed: () {},
+                  onPressed: onPlayPressed,
                   iconData: videoController!.value.isPlaying
                       ? Icons.pause
                       : Icons.play_arrow,
                 ),
                 CustomIconButton(
-                  onPressed: () {},
+                  onPressed: onForwardPressed,
                   iconData: Icons.rotate_right,
                 ),
               ],
@@ -96,5 +108,35 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
         ],
       ),
     );
+  }
+
+  void onReversePressed() {
+    final currentPosition = videoController!.value.position;
+
+    Duration position = Duration();
+
+    if (currentPosition.inSeconds > 3) {
+      position = currentPosition - Duration(seconds: 3);
+    }
+
+    videoController!.seekTo(position);
+  }
+
+  void onForwardPressed() {
+    final maxPosition = videoController!.value.duration;
+    final currentPosition = videoController!.value.position;
+
+    Duration position = maxPosition;
+
+    if ((maxPosition - Duration(seconds: 3)).inSeconds >
+        currentPosition.inSeconds) {
+      position = currentPosition + Duration(seconds: 3);
+    }
+  }
+
+  void onPlayPressed() {
+    videoController!.value.isPlaying
+        ? videoController!.pause()
+        : videoController!.play();
   }
 }
