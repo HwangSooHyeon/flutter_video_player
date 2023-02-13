@@ -40,6 +40,15 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     });
   }
 
+  @override
+  void didUpdateWidget(covariant CustomVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.video.path != widget.video.path) {
+      initializeController();
+    }
+  }
+
   void videoControllerListener() {
     setState(() {});
   }
